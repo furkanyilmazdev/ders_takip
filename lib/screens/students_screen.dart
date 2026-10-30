@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ders_takip/screens/add_student_dialog.dart';
 
 import '../data/providers.dart';
 
@@ -23,8 +24,14 @@ class StudentsScreen extends ConsumerWidget {
         error: (error, stack) => Center(child: Text('Hata: $error')),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          ref.read(studentsProvider.notifier).addTestStudent();
+        onPressed: () async {
+          final name = await showDialog<String>(
+            context: context,
+            builder: (context) => const AddStudentDialog(),
+          );
+          if (name != null) {
+            ref.read(studentsProvider.notifier).addStudent(name);
+          }
         },
         child: const Icon(Icons.add),
       ),

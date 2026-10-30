@@ -14,10 +14,9 @@ class StudentsNotifier extends AsyncNotifier<List<Student>> {
     return ref.watch(studentRepositoryProvider).getAll();
   }
 
-  Future<void> addTestStudent() async {
+  Future<void> addStudent(String name) async {
     final repo = ref.read(studentRepositoryProvider);
-    final count = (await repo.getAll()).length;
-    await repo.add(Student(name: 'Öğrenci ${count + 1}'));
+    await repo.add(Student(name: name));
     state = AsyncData(await repo.getAll());
   }
 }
